@@ -60,13 +60,20 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-# data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+
+# data = {
+#     "weather": {"value": wea, "color": get_random_color()},
+#     "temperature": {"value": temperature, "color": get_random_color()},
+#     "love_days": {"value": get_count(), "color": get_random_color()},
+#     "birthday_left": {"value": get_birthday(), "color": get_random_color()},
+#     "words": {"value": get_words(), "color": get_random_color()}
+# }
 data = {
-    "weather": {"value": wea, "color": get_random_color()},
-    "temperature": {"value": temperature, "color": get_random_color()},
-    "love_days": {"value": get_count(), "color": get_random_color()},
-    "birthday_left": {"value": get_birthday(), "color": get_random_color()},
-    "words": {"value": get_words(), "color": get_random_color()}
+    "weather": {"value": wea},  # 无需颜色
+    "temperature": {"value": temperature},  # 无需颜色
+    "love_days": {"value": get_count()},  # 无需颜色
+    "birthday_left": {"value": get_birthday()},  # 无需颜色
+    "words": {"value": get_words(), "color": "#FF0000"}  # 仅给 words 设置颜色
 }
 res = wm.send_template(user_id, template_id, data)
 print(res)
