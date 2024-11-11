@@ -24,7 +24,7 @@ template_id = os.environ["TEMPLATE_ID"]
 #   weather = res['data']['list'][0]
 #   return weather['weather'], math.floor(weather['temp'])
 def get_weather():
-    url = "https://api.vvhan.com/api/weather?city={city}"
+    url = f"https://api.vvhan.com/api/weather?city={city}"
     res = requests.get(url).json()
     
     if res.get("success"):
