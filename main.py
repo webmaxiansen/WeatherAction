@@ -6,6 +6,12 @@ import requests
 import os
 import random
 
+
+# 检查所有相关环境变量的值
+variables = ['START_DATE', 'CITY', 'BIRTHDAY', 'APP_ID', 'APP_SECRET', 'USER_ID', 'TEMPLATE_ID', 'PERIOD_DATE']
+for var in variables:
+    print(f"{var}: {os.environ.get(var)}")
+    
 # 获取当前日期
 today = datetime.now()
 
