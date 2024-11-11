@@ -18,12 +18,24 @@ user_id = os.environ["USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
 
 
+# def get_weather():
+#   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
+#   res = requests.get(url).json()
+#   weather = res['data']['list'][0]
+#   return weather['weather'], math.floor(weather['temp'])
 def get_weather():
-  url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
-  res = requests.get(url).json()
-  weather = res['data']['list'][0]
-  return weather['weather'], math.floor(weather['temp'])
-
+    url = f"https://api.vvhan.com/api/weather?city={city}"
+    res = requests.get(url).json()
+    
+    if res.get("success"):
+        weather = res['data']['type']  # 天气类型，例如“多云”
+        # 提取温度区间的最低温度和最高温度，这里我们取平均值作为当前温度
+        low_temp = int(res['data']['low'].replace("°C", ""))
+        high_temp = int(res['data']['high'].replace("°C", ""))
+        temperature = (low_temp + high_temp) / 2  # 计算平均温度
+        return weather, math.floor(temperature)
+    else:
+        raise Exception("Failed to fetch weather data.")
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
   return delta.days
