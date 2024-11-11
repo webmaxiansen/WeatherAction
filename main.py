@@ -17,7 +17,7 @@ app_secret = os.environ["APP_SECRET"]
 user_id = os.environ["USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
 # 姨妈日期
-period_date = os.environ["PERIOD_DATE"]
+period_date = os.environ.get("PERIOD_DATE", "11-19")
 
 # def get_weather():
 #   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
