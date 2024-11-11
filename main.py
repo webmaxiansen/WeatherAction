@@ -17,7 +17,7 @@ app_secret = os.environ["APP_SECRET"]
 user_id = os.environ["USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
 # 姨妈日期
-period_date = os.environ.get("PERIOD_DATE", "11-19")
+period_date = os.environ["PERIOD_DATE"]
 
 # def get_weather():
 #   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
@@ -42,7 +42,6 @@ def get_count():
   return delta.days
 # 姨妈到来日期
 def get_period_days():
-    period_date = os.environ['PERIOD_DATE']
     next_period = datetime.strptime(str(date.today().year) + "-" + period_date, "%Y-%m-%d")
     if next_period < datetime.now():
         next_period = next_period.replace(year=next_period.year + 1)
