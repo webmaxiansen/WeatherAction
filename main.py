@@ -24,7 +24,7 @@ app_secret = os.environ.get("APP_SECRET")
 user_id = os.environ.get("USER_ID")
 template_id = os.environ.get("TEMPLATE_ID")
 # 检查姨妈日期是否设置
-period_date = os.environ.get("PERIOD_DATE")
+period_date = os.environ.get("PERIOD_DATE","11-19")
 if period_date is None:
     raise ValueError("请确保环境变量 'PERIOD_DATE' 已设置")
 
