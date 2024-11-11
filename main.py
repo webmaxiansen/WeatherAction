@@ -16,7 +16,8 @@ app_secret = os.environ["APP_SECRET"]
 
 user_id = os.environ["USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
-
+# 姨妈日期
+period_date = os.environ["PERIOD_DATE"]
 
 # def get_weather():
 #   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
@@ -39,6 +40,13 @@ def get_weather():
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
   return delta.days
+# 姨妈到来日期
+def get_period_days():
+    period_date = os.environ['PERIOD_DATE']
+    next_period = datetime.strptime(str(date.today().year) + "-" + period_date, "%Y-%m-%d")
+    if next_period < datetime.now():
+        next_period = next_period.replace(year=next_period.year + 1)
+    return (next_period - today).days
 
 def get_birthday():
   next = datetime.strptime(str(date.today().year) + "-" + birthday, "%Y-%m-%d")
@@ -75,6 +83,7 @@ data = {
     "temperature": {"value": temperature},  # 无需颜色
     "love_days": {"value": get_count()},  # 无需颜色
     "birthday_left": {"value": get_birthday()},  # 无需颜色
+    "period_days": {"value": get_period_days()},  # 新增的姨妈倒计时
     "words": {"value": get_words(), "color": "#FF0000"}  # 仅给 words 设置颜色
 }
 res = wm.send_template(user_id, template_id, data)
