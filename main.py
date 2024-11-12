@@ -25,21 +25,23 @@ user_id = os.environ.get("USER_ID")
 template_id = os.environ.get("TEMPLATE_ID")
 # 检查姨妈日期是否设置
 period_date = os.environ.get("PERIOD_DATE","11-19")
+key = os.environ.get("WEATHER_KEY")
+
 if period_date is None:
     raise ValueError("请确保环境变量 'PERIOD_DATE' 已设置")
 
 # 获取天气信息
 def get_weather():
-    url = "https://api.vvhan.com/api/weather?city=" + city
+    url = "https://restapi.amap.com/v3/weather/weatherInfo?city=410527&key=" + key
     res = requests.get(url).json()
     
-    if res.get("success"):
-        weather = res['data']['type']  # 天气类型，例如“多云”
-        # 提取温度区间的最低温度和最高温度，这里我们取平均值作为当前温度
-        low_temp = int(res['data']['low'].replace("°C", ""))
-        high_temp = int(res['data']['high'].replace("°C", ""))
-        temperature = (low_temp + high_temp) / 2  # 计算平均温度
-        return weather, math.floor(temperature)
+    # 检查返回结果的状态码是否为成功
+    if res.get("status") == "1" and res.get("lives"):
+        # 提取天气数据
+        weather_data = res['lives'][0]
+        weather = weather_data['weather']  # 天气类型，例如“霾”
+        temperature = int(weather_data['temperature'])  # 当前温度
+        return weather, temperature
     else:
         raise Exception("Failed to fetch weather data.")
 
