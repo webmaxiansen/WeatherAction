@@ -35,3 +35,4 @@ jobs:
       CITY: ${{ secrets.CITY }}
       PERIOD_DATE: ${{secrets.PERIOD_DATE}}
       WEATHER_KEY: ${{secrets.WEATHER_KEY}}
+      XM_USER_ID: ${{secrets.XM_USER_ID}}
