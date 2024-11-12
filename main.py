@@ -5,6 +5,7 @@ from wechatpy.client.api import WeChatMessage, WeChatTemplate
 import requests
 import os
 import random
+import string  # 需要导入 string 模块
 
 
 # 检查所有相关环境变量的值
