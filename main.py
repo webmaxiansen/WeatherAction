@@ -22,6 +22,7 @@ birthday = os.environ.get('BIRTHDAY')
 app_id = os.environ.get("APP_ID")
 app_secret = os.environ.get("APP_SECRET")
 user_id = os.environ.get("USER_ID")
+xiaoma_user_id = os.environ.get("XM_USER_ID")
 template_id = os.environ.get("TEMPLATE_ID")
 # 检查姨妈日期是否设置
 period_date = os.environ.get("PERIOD_DATE","11-19")
@@ -67,9 +68,19 @@ def get_birthday():
 # 获取每日一句话
 def get_words():
     words = requests.get("https://api.vvhan.com/api/text/love?type=json")
+    
+    # 如果请求不成功，重新调用
     if words.status_code != 200:
         return get_words()
-    return words.json()['data']['content']
+    
+    # 获取返回的内容
+    content = words.json()['data']['content']
+    
+    # 判断内容的长度是否大于20，且是否包含标点符号
+    if len(content) > 20 or any(char in string.punctuation for char in content):
+        return get_words()  # 如果不符合要求，则重新获取
+    
+    return content
 
 # 随机生成颜色
 def get_random_color():
@@ -92,6 +103,11 @@ data = {
     "words": {"value": get_words(), "color": "#FF0000"}  # 仅给 words 设置颜色
 }
 
-# 发送模板消息
+# 发送模板消息1
 res = wm.send_template(user_id, template_id, data)
 print(res)
+
+# 发送模板消息2
+res = wm.send_template(xiaoma_user_id, template_id, data)
+print(res)
+
