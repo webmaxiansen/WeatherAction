@@ -63,16 +63,16 @@ def get_period_days():
     today = date.today()
     
     # 构造下个月的姨妈周期日期
-    next_period = datetime(today.year, today.month, period_day)
+    next_period = datetime(today.year, today.month, period_date)
     
     # 如果当前日期已过了本月的姨妈周期，则下一个姨妈周期是在下个月
     if today > next_period.date():
         if today.month == 12:
             # 如果当前是12月，则下一个周期在明年1月
-            next_period = datetime(today.year + 1, 1, period_day)
+            next_period = datetime(today.year + 1, 1, period_date)
         else:
             # 否则，下一个周期在下个月
-            next_period = datetime(today.year, today.month + 1, period_day)
+            next_period = datetime(today.year, today.month + 1, period_date)
     
     # 计算并返回天数差
     return (next_period - today).days
