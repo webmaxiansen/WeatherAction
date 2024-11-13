@@ -1,7 +1,7 @@
 name: morning
 on:
   schedule:
-  - cron:  '28 03 * * *'
+  - cron:  '46 03 * * *'
   workflow_dispatch:
 
 jobs:
@@ -14,11 +14,6 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: master
-        
-    - name: Set timezone to China Standard Time (CST)
-      run: |
-        sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-        sudo dpkg-reconfigure --frontend noninteractive tzdata  
         
     - name: check system time
       run: date  
