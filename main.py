@@ -59,14 +59,15 @@ def get_count():
 #         next_period = next_period.replace(year=next_period.year + 1)
 #     return (next_period - today).days
 
-period_date = "19"  # 这里你可以根据实际情况更改为你获取日期的方式
+
 
 def get_period_days():
+    period_date = 19  # 这里你可以根据实际情况更改为你获取日期的方式
     today = date.today()
     print(f"今天的日期: {today}")  # 打印今天的日期
     
     # 确保 period_date 是整数类型
-    period_date = int(period_date)  # 转换为整数类型
+    # period_date = int(period_date)  # 转换为整数类型
     
     # 构造下个月的姨妈周期日期
     next_period = datetime(today.year, today.month, period_date)
