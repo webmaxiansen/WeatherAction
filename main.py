@@ -61,13 +61,16 @@ def get_count():
 
 
 
+
+# 设定姨妈周期的日期（每月的几号）
+period_date = "19"  # 例如每月28号
+
 def get_period_days():
-    period_date = 19  # 这里你可以根据实际情况更改为你获取日期的方式
     today = date.today()
     print(f"今天的日期: {today}")  # 打印今天的日期
     
     # 确保 period_date 是整数类型
-    # period_date = int(period_date)  # 转换为整数类型
+    period_date = int(period_date)  # 转换为整数类型
     
     # 构造下个月的姨妈周期日期
     next_period = datetime(today.year, today.month, period_date)
@@ -84,13 +87,16 @@ def get_period_days():
         
         print(f"因为今天已经过了本月的周期，所以下一个姨妈周期日期是: {next_period.date()}")
     
+    # 将 today 转换为 datetime 类型，默认为 00:00:00
+    today_datetime = datetime(today.year, today.month, today.day)
+    
     # 计算并返回天数差
-    days_until_next_period = (next_period - today).days
+    days_until_next_period = (next_period - today_datetime).days
     print(f"距离下一个姨妈周期还有 {days_until_next_period} 天")
     
     return days_until_next_period
 
-# 输出距离下一个姨妈到来的天数
+# 调用函数并输出日志
 print(f"距离姨妈到来剩余：{get_period_days()}")
 
 # 计算距离下一个生日的天数
