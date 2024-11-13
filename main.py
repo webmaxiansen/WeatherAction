@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime, date, timedelta
 import math
 from wechatpy import WeChatClient
 from wechatpy.client.api import WeChatMessage, WeChatTemplate
@@ -26,7 +26,7 @@ user_id = os.environ.get("USER_ID")
 xiaoma_user_id = os.environ.get("XM_USER_ID")
 template_id = os.environ.get("TEMPLATE_ID")
 # 检查姨妈日期是否设置
-period_date = os.environ.get("PERIOD_DATE","11-19")
+period_date = os.environ.get("PERIOD_DATE","19")
 key = os.environ.get("WEATHER_KEY")
 
 if period_date is None:
@@ -52,12 +52,33 @@ def get_count():
     delta = today - datetime.strptime(start_date, "%Y-%m-%d")
     return delta.days
 
-# 计算距离下一个姨妈到来的天数
+# # 计算距离下一个姨妈到来的天数
+# def get_period_days():
+#     next_period = datetime.strptime(str(date.today().year) + "-" + period_date, "%Y-%m-%d")
+#     if next_period < datetime.now():
+#         next_period = next_period.replace(year=next_period.year + 1)
+#     return (next_period - today).days
+
 def get_period_days():
-    next_period = datetime.strptime(str(date.today().year) + "-" + period_date, "%Y-%m-%d")
-    if next_period < datetime.now():
-        next_period = next_period.replace(year=next_period.year + 1)
+    today = date.today()
+    
+    # 构造下个月的姨妈周期日期
+    next_period = datetime(today.year, today.month, period_day)
+    
+    # 如果当前日期已过了本月的姨妈周期，则下一个姨妈周期是在下个月
+    if today > next_period.date():
+        if today.month == 12:
+            # 如果当前是12月，则下一个周期在明年1月
+            next_period = datetime(today.year + 1, 1, period_day)
+        else:
+            # 否则，下一个周期在下个月
+            next_period = datetime(today.year, today.month + 1, period_day)
+    
+    # 计算并返回天数差
     return (next_period - today).days
+
+# 输出距离下一个姨妈到来的天数
+print("距离姨妈到来剩余：{get_period_days()}")
 
 # 计算距离下一个生日的天数
 def get_birthday():
