@@ -26,7 +26,7 @@ user_id = os.environ.get("USER_ID")
 xiaoma_user_id = os.environ.get("XM_USER_ID")
 template_id = os.environ.get("TEMPLATE_ID")
 # 检查姨妈日期是否设置
-period_date = os.environ.get("PERIOD_DATE","19")
+period_date = int(os.environ.get("PERIOD_DATE","19"))
 key = os.environ.get("WEATHER_KEY")
 
 if period_date is None:
