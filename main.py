@@ -90,7 +90,7 @@ def get_period_days():
     return days_until_next_period
 
 # 输出距离下一个姨妈到来的天数
-print("距离姨妈到来剩余：{get_period_days()}")
+print(f"距离姨妈到来剩余：{get_period_days()}")
 
 # 计算距离下一个生日的天数
 def get_birthday():
