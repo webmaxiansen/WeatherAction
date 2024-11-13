@@ -15,6 +15,11 @@ jobs:
       with:
         ref: master
         
+    - name: Set timezone to China Standard Time (CST)
+      run: |
+        sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+        sudo dpkg-reconfigure --frontend noninteractive tzdata  
+        
     - name: check system time
       run: date  
       
