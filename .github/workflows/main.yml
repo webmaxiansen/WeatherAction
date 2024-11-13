@@ -1,39 +1,34 @@
 name: morning
 on:
   schedule:
-    - cron: '00 23 * * *'  # 23:00 UTC (北京时间 7:00 AM)
+  - cron:  '28 03 * * *'
   workflow_dispatch:
 
 jobs:
   send_message:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     name: send morning to your girlfriend
 
     steps:
-    - name: Checkout code
+    - name: checkout
       uses: actions/checkout@v3
       with:
         ref: master
-
-    - name: Check system time
-      run: Get-Date  # 获取系统时间 (PowerShell 命令)
-      shell: pwsh
-
-    - name: Set time zone to CST (China Standard Time)
+        
+    - name: Set timezone to China Standard Time (CST)
       run: |
-        tzutil /s "China Standard Time"  # 设置时区为中国标准时间（CST）
-      shell: pwsh
-
-    - name: Install dependencies
-      run: |
-        choco install python --version 3.9.0 -y  # 安装指定版本的 Python
-        python -m pip install --upgrade pip  # 更新 pip
-        pip install -r ./requirements.txt  # 安装项目依赖
-      shell: pwsh
-
-    - name: Send message
-      run: python ./main.py  # 执行 Python 脚本
-      shell: pwsh
+        sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+        sudo dpkg-reconfigure --frontend noninteractive tzdata  
+        
+    - name: check system time
+      run: date  
+      
+    - name: sender
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+        architecture: 'x64'
+    - run: pip install -r ./requirements.txt && python ./main.py
 
     env:
       APP_ID: ${{ secrets.APP_ID }}
@@ -43,6 +38,6 @@ jobs:
       START_DATE: ${{ secrets.START_DATE }}
       BIRTHDAY: ${{ secrets.BIRTHDAY }}
       CITY: ${{ secrets.CITY }}
-      PERIOD_DATE: ${{ secrets.PERIOD_DATE }}
-      WEATHER_KEY: ${{ secrets.WEATHER_KEY }}
-      XM_USER_ID: ${{ secrets.XM_USER_ID }}
+      PERIOD_DATE: ${{secrets.PERIOD_DATE}}
+      WEATHER_KEY: ${{secrets.WEATHER_KEY}}
+      XM_USER_ID: ${{secrets.XM_USER_ID}}
