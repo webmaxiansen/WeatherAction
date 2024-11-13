@@ -59,12 +59,6 @@ def get_count():
 #         next_period = next_period.replace(year=next_period.year + 1)
 #     return (next_period - today).days
 
-
-
-
-# 设定姨妈周期的日期（每月的几号）
-period_date = "19"  # 例如每月28号
-
 def get_period_days():
     today = date.today()
     print(f"今天的日期: {today}")  # 打印今天的日期
