@@ -32,10 +32,49 @@ key = os.environ.get("WEATHER_KEY")
 if period_date is None:
     raise ValueError("请确保环境变量 'PERIOD_DATE' 已设置")
 
+
+# Define a list of random User-Agent headers
+headers_list = [
+    {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"},
+    {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"},
+    {"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0"},
+    {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0"},
+    {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/602.1"},
+    {"User-Agent": "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Mobile Safari/537.36"},
+    {"User-Agent": "Mozilla/5.0 (iPad; CPU OS 14_0 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/602.1"},
+    {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0"},
+    {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15"},
+    {"User-Agent": "Mozilla/5.0 (Linux; U; Android 9; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19"},
+    {"User-Agent": "Mozilla/5.0 (Windows NT 9.0; Win64; x64) AppleWebKit/583.3 (KHTML, like Gecko) Chrome/107.0.4739.36 Safari/529.20"},
+    {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/526.24 (KHTML, like Gecko) Chrome/101.0.4912.15 Safari/594.20"},
+    {"User-Agent": "Mozilla/5.0 (Linux; Android 9; SM-G973F) AppleWebKit/510.41 (KHTML, like Gecko) Chrome/101.0.4876.72 Mobile Safari/515.4"},
+    {"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:81.0) Gecko/20100101 Firefox/76.0"},
+    {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_0 like Mac OS X) AppleWebKit/671.1.9 (KHTML, like Gecko) Version/12.0 Mobile/15E101 Safari/657.1.46"},
+    {"User-Agent": "Mozilla/5.0 (iPad; CPU OS 15_0 like Mac OS X) AppleWebKit/659.1.43 (KHTML, like Gecko) Version/14.0 Mobile/15E164 Safari/686.1.50"},
+    {"User-Agent": "Mozilla/5.0 (Windows NT 9.0; Win64; x64) AppleWebKit/583.3 (KHTML, like Gecko) Chrome/107.0.4739.36 Safari/529.20"},
+    {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/526.24 (KHTML, like Gecko) Chrome/101.0.4912.15 Safari/594.20"},
+    {"User-Agent": "Mozilla/5.0 (Linux; Android 9; SM-G973F) AppleWebKit/510.41 (KHTML, like Gecko) Chrome/101.0.4876.72 Mobile Safari/515.4"},
+    {"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:81.0) Gecko/20100101 Firefox/76.0"},
+    {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_0 like Mac OS X) AppleWebKit/671.1.9 (KHTML, like Gecko) Version/12.0 Mobile/15E101 Safari/657.1.46"},
+    {"User-Agent": "Mozilla/5.0 (iPad; CPU OS 15_0 like Mac OS X) AppleWebKit/659.1.43 (KHTML, like Gecko) Version/14.0 Mobile/15E164 Safari/686.1.50"},
+    {"User-Agent": "Mozilla/5.0 (Windows NT 9.0; Win64; x64) AppleWebKit/583.3 (KHTML, like Gecko) Chrome/107.0.4739.36 Safari/529.20"},
+    {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/526.24 (KHTML, like Gecko) Chrome/101.0.4912.15 Safari/594.20"},
+    {"User-Agent": "Mozilla/5.0 (Linux; Android 9; SM-G973F) AppleWebKit/510.41 (KHTML, like Gecko) Chrome/101.0.4876.72 Mobile Safari/515.4"},
+    {"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:81.0) Gecko/20100101 Firefox/76.0"},
+    {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_0 like Mac OS X) AppleWebKit/671.1.9 (KHTML, like Gecko) Version/12.0 Mobile/15E101 Safari/657.1.46"},
+    {"User-Agent": "Mozilla/5.0 (iPad; CPU OS 15_0 like Mac OS X) AppleWebKit/659.1.43 (KHTML, like Gecko) Version/14.0 Mobile/15E164 Safari/686.1.50"}
+]
+
+
+# Randomly select one header
+random_header = random.choice(headers_list)
+
+print(f"请求头信息为：{random_header}")
+
 # 获取天气信息
 def get_weather():
     url = "https://restapi.amap.com/v3/weather/weatherInfo?city=410527&key=" + key
-    res = requests.get(url).json()
+    res = requests.get(url,headers=random_header).json()
     
     # 检查返回结果的状态码是否为成功
     if res.get("status") == "1" and res.get("lives"):
@@ -102,7 +141,7 @@ def get_birthday():
 
 # 获取每日一句话
 def get_words():
-    words = requests.get("https://api.vvhan.com/api/text/love?type=json")
+    words = requests.get("https://api.vvhan.com/api/text/love?type=json",headers=random_header)
     
     # 如果请求不成功，重新调用
     if words.status_code != 200:
